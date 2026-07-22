@@ -1,49 +1,41 @@
 {
-  # Declares flake inputs
+  description = "A stupid simple dev environment for Verifiable AI";
+
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-    import-tree = {
-      url = "github:vic/import-tree";
-    };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    comin = {
-      url = "github:nlewo/comin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    playit-nixos-module = { 
-      url = "github:pedorich-n/playit-nixos-module";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
-  outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; }
-      (inputs.import-tree ./modules);
+
+  outputs = { self, nixpkgs }:
+    let
+      # Support standard Linux and macOS architectures
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      forEachSystem = nixpkgs.lib.genAttrs supportedSystems;
+    in
+    {
+      devShells = forEachSystem (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          
+          # Define the Python environment with required packages
+          pythonEnv = pkgs.python3.withPackages (ps: with ps; [
+            torch
+            transformers
+            cryptography
+          ]);
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [ pythonEnv ];
+
+            shellHook = ''
+              echo "========================================="
+              echo "  Verifiable AI Dev Environment Ready!   "
+              echo "========================================="
+              echo "Execute your script with:"
+              echo "  python verifiable_ai.py"
+            '';
+          };
+        }
+      );
+    };
 }
-
-
-
