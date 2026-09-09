@@ -1,6 +1,6 @@
 fyproject
 
-output:
+determinism output:
 ```bash
 sudha@nryn-laptop-dualboot:~/fyproject]$ uv run python -m fyproject.test_determinism
 Run 1: 87d83df583a9f6656f42bc3c137d3f487e68f09ca55e8e20bcd3694d40226af5
@@ -15,6 +15,10 @@ Run 9: 87d83df583a9f6656f42bc3c137d3f487e68f09ca55e8e20bcd3694d40226af5
 Run 10: 87d83df583a9f6656f42bc3c137d3f487e68f09ca55e8e20bcd3694d40226af5
 
 SUCCESS: All logical AI parameters are 100% functionally deterministic.
+
+```
+tpm signing:
+```bash
 (fyproject)
 [sudha@nryn-laptop-dualboot:~/fyproject]$ uv run python -m fyproject.test_tpm
 1. Generating deterministic AI output...
