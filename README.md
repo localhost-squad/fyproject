@@ -45,6 +45,9 @@ Run 10: 87d83df583a9f6656f42bc3c137d3f487e68f09ca55e8e20bcd3694d40226af5
 SUCCESS: All logical AI parameters are 100% functionally deterministic.
 
 ```
+in linux enviroment make sure your user is in the tss group and tpm2-tools package is installed
+sudo apt installed tpm2-tools
+(hardware must have tpm2 security to make this work)
 tpm signing:
 ```bash
 (fyproject)
