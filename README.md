@@ -1,5 +1,33 @@
 fyproject
 
+raw output:
+```bash
+[sudha@nryn-laptop-dualboot:~/fyproject]$ uv run fyproject
+User: What's the weather like in Lagos right now?
+
+---raw output---
+{
+  "type": "respond",
+  "success": true,
+  "error": null,
+  "error_code": null,
+  "reason": null,
+  "function_calls": [],
+  "reasoning": "User asked a question, respond with the weather data.",
+  "confidence": 0.7025,
+  "prefill_tps": 930.5,
+  "decode_tps": 412.7,
+  "peak_ram_mb": 52.3,
+  "results": [
+    {
+      "city": "Lagos",
+      "temp_c": 27,
+      "sky": "clear"
+    }
+  ]
+}
+```
+
 determinism output:
 ```bash
 sudha@nryn-laptop-dualboot:~/fyproject]$ uv run python -m fyproject.test_determinism
@@ -44,6 +72,4 @@ VERIFICATION
 ============================================================
 SUCCESS: Cryptographically verified by hardware.
    (No files were generated in your current directory)
-(fyproject)
-[sudha@nryn-laptop-dualboot:~/fyproject]$
 ```
