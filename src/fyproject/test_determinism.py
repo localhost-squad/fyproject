@@ -7,7 +7,7 @@ def test_determinism() -> None:
     prompt = "What's the weather like in Lagos right now?"
     hashes = []
     
-    for i in range(5):
+    for i in range(10):
         agent.reset() # Clear state
         response = agent.run(prompt)
         
@@ -35,7 +35,7 @@ def test_determinism() -> None:
         
     # Check if all hashes are identical
     if len(set(hashes)) == 1:
-        print("\n✅ SUCCESS: All logical AI parameters are 100% functionally deterministic.")
+        print("\nSUCCESS: All logical AI parameters are 100% functionally deterministic.")
     else:
         print("\n❌ FAILURE: Logical output varied between runs.")
         print("Differing output:", semantic_response)

@@ -16,6 +16,10 @@ def get_ai_payload() -> dict:
     semantic_data = {
         "type": response.get("type"),
         "success": response.get("success"),
+        "error": response.get("error"),
+        "error_code": response.get("error_code"),
+        "reason": response.get("reason"),
+        "function_calls": response.get("function_calls"),
         "reasoning": response.get("reasoning"),
         "results": response.get("results")
     }
@@ -93,17 +97,17 @@ def main() -> None:
     pub_key_b64 = base64.b64encode(pub_key).decode('utf-8')
     sig_b64 = base64.b64encode(signature).decode('utf-8')
     
-    print(f"\n🔑 PUBLIC KEY:\n{pub_key_b64}")
-    print(f"\n✍️ SIGNATURE:\n{sig_b64}")
+    print(f"\nPUBLIC KEY:\n{pub_key_b64}")
+    print(f"\nSIGNATURE:\n{sig_b64}")
     
     print("\n" + "="*60)
     print("VERIFICATION")
     print("="*60)
     if is_valid:
-        print("✅ SUCCESS: Cryptographically verified by hardware.")
+        print("SUCCESS: Cryptographically verified by hardware.")
         print("   (No files were generated in your current directory)")
     else:
-        print("❌ FAILURE: Verification failed.")
+        print("FAILURE: Verification failed.")
 
 # THIS IS THE TRIGGER. Without this, the script runs silently.
 if __name__ == "__main__":
